@@ -88,7 +88,7 @@ class Worker:
         stat = ""
         iter = 0
         for one in Person.select().order_by(Person.count_messages.desc()).limit(10):
-            user = self.BOT.get_chat_member(-1001137097313, one.user_id)
+            user = self.BOT.get_chat_member(-1001138206230, one.user_id)#1001137097313
             if iter == 0: 
                 stat += f"🥇{user.first_name} {one.count_messages}\n"
                 iter += 1
@@ -105,7 +105,7 @@ class Worker:
             total += i.count_messages
 
         insert = ""
-        if _day != 6:            
+        if _day == 6:            
             for rec in Record.select().order_by(Record.total_counts.desc()).limit(1):
                 if total > rec.total_counts:
                     insert = "Мы поставили новый рекорд!🎉"
