@@ -88,7 +88,7 @@ class Worker:
         stat = ""
         iter = 0
         for one in Person.select().order_by(Person.count_messages.desc()).limit(10):
-            _user = self.BOT.get_chat_member(-1001138206230, one.user_id)#1001137097313
+            _user = self.BOT.get_chat_member(-1001137097313, one.user_id)
             if iter == 0: 
                 stat += f"🥇{_user.user.first_name} {one.count_messages}\n"
                 iter += 1
@@ -115,6 +115,9 @@ class Worker:
                 else:
                     res = rec.total_counts - total
                     insert = f"Ещё бы <b>{res}</b> {self.CurrentWord(str(res))} и мы побили бы прошлый рекорд😌"
+            for per in Person.select():
+                per.delete_instance()
+                per.save()
         letter = "Вот и подошла к концу ещё одна неделя! И вот вам немного статистики:\n\n<i>Самые активные участники:</i>\n{}\nА всего было напечатано <b>{}</b> {}!\n{}\n\nУдачи в наступающей неделе!😉".format(stat, total, self.CurrentWord(str(total)), insert)
         return letter
 
