@@ -88,18 +88,18 @@ class Worker:
         stat = ""
         iter = 0
         for one in Person.select().order_by(Person.count_messages.desc()).limit(10):
-            user = self.BOT.get_chat_member(-1001138206230, one.user_id)#1001137097313
+            _user = self.BOT.get_chat_member(-1001138206230, one.user_id)#1001137097313
             if iter == 0: 
-                stat += f"🥇{user.first_name} {one.count_messages}\n"
+                stat += f"🥇{_user.user.first_name} {one.count_messages}\n"
                 iter += 1
             elif iter == 1:
-                stat += f"🥈{user.first_name} {one.count_messages}\n"
+                stat += f"🥈{_user.user.first_name} {one.count_messages}\n"
                 iter += 1
             elif iter == 2:
-                stat += f"🥉{user.first_name} {one.count_messages}\n"
+                stat += f"🥉{_user.user.first_name} {one.count_messages}\n"
                 iter += 1
             else:
-                stat += f"       {user.first_name} {one.count_messages}\n"
+                stat += f"       {_user.user.first_name} {one.count_messages}\n"
         total = 0
         for i in Person.select().order_by(Person.count_messages):
             total += i.count_messages
