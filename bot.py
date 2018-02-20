@@ -11,8 +11,8 @@ def other_type_handler(message):
 
 @bot.message_handler(content_types=["photo"])
 def handle_photo(message):
-	worker.Counter(message.from_user.id)
-    if worker.FindBadWord(message.caption):
+    worker.Counter(message.from_user.id)
+    if message.caption != None and worker.FindBadWord(message.caption):
         try:
             worker.BlockUser(message.from_user.id, message.message_id, message.chat.id, message.from_user.first_name)
         except:
