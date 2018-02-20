@@ -5,6 +5,19 @@ import time
 bot = telebot.TeleBot("492864827:AAFc_KDXUf4-06pZqstFv6HaPO5m5LaruvE")
 worker = Worker(bot)
 
+@bot.message_handler(content_types=["audio", "document", "sticker", "video", "contact"])
+def other_type_handler(message):
+	worker.Counter(message.from_user.id)
+
+@bot.message_handler(content_types=["photo"])
+def handle_photo(message):
+	worker.Counter(message.from_user.id)
+    if worker.FindBadWord(message.caption):
+        try:
+            worker.BlockUser(message.from_user.id, message.message_id, message.chat.id, message.from_user.first_name)
+        except:
+            bot.send_message(message.chat.id, "Так-с, материмся?👮‍♀️", reply_to_message_id=message.message_id)
+
 @bot.message_handler(content_types=["new_chat_members"])
 def new_members_handler(message):
     worker.HelloUser(message)
