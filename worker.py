@@ -91,16 +91,16 @@ class Worker:
             _user = self.BOT.get_chat_member(-1001137097313, one.user_id)
             name = "@" + _user.user.username if _user.user.username != None else _user.user.first_name
             if iter == 0: 
-                stat += f"🥇{name} {one.count_messages}\n"
+                stat += f"🥇{name} - {one.count_messages}\n"
                 iter += 1
             elif iter == 1:
-                stat += f"🥈{name} {one.count_messages}\n"
+                stat += f"🥈{name} - {one.count_messages}\n"
                 iter += 1
             elif iter == 2:
-                stat += f"🥉{name} {one.count_messages}\n"
+                stat += f"🥉{name} - {one.count_messages}\n"
                 iter += 1
             else:
-                stat += f"       {name} {one.count_messages}\n"
+                stat += f"       {name} - {one.count_messages}\n"
         total = 0
         for i in Person.select().order_by(Person.count_messages):
             total += i.count_messages
