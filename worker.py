@@ -1,8 +1,15 @@
 import random
 from peewee import *
+import psycopg2
 import time
 
-db = SqliteDatabase("Database.sqlite")
+db = PostgresqlDatabase(
+	database="d6hjs36metkrvi",
+    user="ehxsbpcoaecjcq",
+    password="54e7ef1e8813751cb6dcb84c31057e8c02be4f73a9ba986ef76ced541aa31fef",
+    host="ec2-184-73-202-179.compute-1.amazonaws.com",
+    port=5432
+)
 
 class Person(Model):
     user_id = IntegerField()
@@ -100,7 +107,7 @@ class Worker:
                 stat += f"🥉{name} - {one.count_messages}\n"
                 iter += 1
             else:
-                stat += f"       {name} - {one.count_messages}\n"
+                stat += f"     {name} - {one.count_messages}\n"
         total = 0
         for i in Person.select().order_by(Person.count_messages):
             total += i.count_messages
@@ -117,7 +124,7 @@ class Worker:
                     res = rec.total_counts - total
                     insert = f"Ещё бы <b>{res}</b> {self.CurrentWord(str(res))} и мы побили бы прошлый рекорд😌"
             for per in Person.select():
-                per.delete_instance()
+                per.count_messages = 0
                 per.save()
         letter = "Вот и подошла к концу ещё одна неделя! И вот вам немного статистики:\n\n<i>Самые активные участники:</i>\n{}\nА всего было напечатано <b>{}</b> {}!\n{}\n\nУдачи в наступающей неделе!😉".format(stat, total, self.CurrentWord(str(total)), insert)
         return letter
