@@ -4,10 +4,10 @@ import psycopg2
 import time
 
 db = PostgresqlDatabase(
-	database="d6hjs36metkrvi",
-    user="ehxsbpcoaecjcq",
-    password="54e7ef1e8813751cb6dcb84c31057e8c02be4f73a9ba986ef76ced541aa31fef",
-    host="ec2-184-73-202-179.compute-1.amazonaws.com",
+	database="d8f1mjaq4lsqmk",
+    user="torfxnhntooste",
+    password="6173a4aac270a1b86399b085f79ed30718af3c63a585597675e62d4366c0ce8d",
+    host="ec2-54-163-234-99.compute-1.amazonaws.com",
     port=5432
 )
 
