@@ -1,6 +1,5 @@
 import random
 from peewee import *
-import psycopg2
 import time
 
 db = PostgresqlDatabase(
