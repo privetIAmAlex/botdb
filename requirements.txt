@@ -4,6 +4,7 @@ googletrans==2.2.0
 idna==2.6
 peewee==3.0.18
 psycopg2==2.7.4
+psycopg2-binary==2.7.4
 pyTelegramBotAPI==3.5.2
 requests==2.18.4
 six==1.11.0
