@@ -25,13 +25,13 @@ def new_members_handler(message):
 @bot.message_handler(content_types=["text"])
 def handle_message(message):
     if message.chat.id == 497551952:
-        if message.text == "send_stat":
-            day = time.strftime("%w")
-            letter = worker.GetStat(day)
-            if day == 6:
-                bot.send_message(-1001137097313, letter, parse_mode="HTML")
-            else:
-                bot.send_message(497551952, letter, parse_mode="HTML")
+        day = time.strftime("%w")
+        letter = worker.GetStat(day)
+        if message.text == "send_stat" and int(day) == 0:
+            bot.send_message(-1001137097313, letter, parse_mode="HTML")
+        elif message.text == "send_stat_me":
+            bot.send_message(497551952, letter, parse_mode="HTML")
+            bot.send_message(497551952, day)
         elif message.text == "unmute":
             bot.restrict_chat_member(-1001137097313, 497551952, until_date=time.time()+35)
         return

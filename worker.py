@@ -113,7 +113,7 @@ class Worker:
             total += i.count_messages
 
         insert = ""
-        if _day == 6:            
+        if _day == 0 or _day == 6:            
             for rec in Record.select().order_by(Record.total_counts.desc()).limit(1):
                 if total > rec.total_counts:
                     insert = "Мы поставили новый рекорд!🎉"
