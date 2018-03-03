@@ -2,7 +2,7 @@ import telebot
 from worker import Worker
 import time
 
-bot = telebot.TeleBot("492864827:AAFc_KDXUf4-06pZqstFv6HaPO5m5LaruvE")
+bot = telebot.TeleBot("TOKEN")
 worker = Worker(bot)
 
 @bot.message_handler(content_types=["audio", "document", "sticker", "video", "contact"])
