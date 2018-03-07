@@ -116,7 +116,7 @@ class Worker:
 
         insert = ""
         for rec in Record.select():
-            print(f"~~~~~~~~\ntotal = {total}\nrec = {rec}\nrec.total_counts = {rec.total_counts}\n~~~~~~~~~~~")
+            self.BOT.send_message(497551952, f"~~~~~~~~\ntotal = {total}\nrec = {rec}\nrec.total_counts = {rec.total_counts}\n~~~~~~~~~~~")
             if total > rec.total_counts:
                 insert = "Мы поставили новый рекорд!🎉"
                 a = Record.create(total_counts=total)
