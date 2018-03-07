@@ -19,7 +19,7 @@ class Person(Model):
         database = db
 
 class Record(Model):
-    total_counts = IntegerField()
+    total_counts = IntegerField(default=0)
     class Meta:
         database = db
 
@@ -79,50 +79,52 @@ class Worker:
             self.BOT.send_message(chat_id, "<b>{} заблокирован(а) на 1 минуту</b>\n\n{}, у нас нельзя материться!\nВ следующий раз наказание будет строже!".format(first_name, first_name), parse_mode="html")
         self.BOT.delete_message(chat_id, message_id)
 
-    def CurrentWord(self, number):
+    def CurrentWord(self, number):                  
         iy = ['11', '12', '13', '14', '5', '6', '7', '8', '9', '0']
-        for i in range(len(iy)):
-            if iy[i] in number:
-                return "сообщений"          
         if number.endswith('1'):
             return "сообщение"
         elif number.endswith('2') or number.endswith('3') or number.endswith('4'):
             return "сообщения"
         else:
-            return "сообщ."
+            for i in range(len(iy)):
+                if iy[i] in number:
+                    return "сообщений"
 
     def GetStat(self, _day):
         stat = ""
         iter = 0
         for one in Person.select().order_by(Person.count_messages.desc()).limit(10):
-            _user = self.BOT.get_chat_member(-1001137097313, one.user_id)
-            name = "@" + _user.user.username if _user.user.username != None else _user.user.first_name
-            if iter == 0: 
-                stat += f"🥇{name} - {one.count_messages}\n"
-                iter += 1
-            elif iter == 1:
-                stat += f"🥈{name} - {one.count_messages}\n"
-                iter += 1
-            elif iter == 2:
-                stat += f"🥉{name} - {one.count_messages}\n"
-                iter += 1
-            else:
-                stat += f"     {name} - {one.count_messages}\n"
+            try:
+                _user = self.BOT.get_chat_member(-1001137097313, one.user_id)
+                name = "@" + _user.user.username if _user.user.username != None else _user.user.first_name
+                if iter == 0: 
+                    stat += f"🥇{name} - {one.count_messages}\n"
+                    iter += 1
+                elif iter == 1:
+                    stat += f"🥈{name} - {one.count_messages}\n"
+                    iter += 1
+                elif iter == 2:
+                    stat += f"🥉{name} - {one.count_messages}\n"
+                    iter += 1
+                else:
+                    stat += f"     {name} - {one.count_messages}\n"
+            except Exception:
+                pass
         total = 0
-        for i in Person.select().order_by(Person.count_messages):
+        for i in Person.select():
             total += i.count_messages
 
         insert = ""
-        if _day == 0 or _day == 6:            
-            for rec in Record.select().order_by(Record.total_counts.desc()).limit(1):
-                if total > rec.total_counts:
-                    insert = "Мы поставили новый рекорд!🎉"
-                    a = Record.create(total_counts=total)
-                    rec.delete_instance()
-                    a.save()                    
-                else:
-                    res = rec.total_counts - total
-                    insert = f"Ещё бы <b>{res}</b> {self.CurrentWord(str(res))} и мы побили бы прошлый рекорд😌"
+        for rec in Record.select():
+            if total > rec.total_counts:
+                insert = "Мы поставили новый рекорд!🎉"
+                a = Record.create(total_counts=total)
+                rec.delete_instance()
+                a.save()                    
+            else:
+                res = rec.total_counts - total
+                insert = f"Ещё бы <b>{res}</b> {self.CurrentWord(str(res))} и мы побили бы прошлый рекорд😌"
+        if _day == 0:
             for per in Person.select():
                 per.count_messages = 0
                 per.save()
