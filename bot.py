@@ -32,6 +32,7 @@ def handle_message(message):
         elif message.text == "send_stat_me":
             bot.send_message(497551952, letter, parse_mode="HTML")
             bot.send_message(497551952, day)
+            bot.send_message(497551952, worker.mess)            
         elif message.text == "unmute":
             bot.restrict_chat_member(-1001137097313, 497551952, until_date=time.time()+35)
         return

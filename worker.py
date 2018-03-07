@@ -27,7 +27,7 @@ Person.create_table()
 Record.create_table()
 
 class Worker:
-
+    mess = ""
     BOT = None
     bad_words = []
     phrases = [
@@ -116,7 +116,7 @@ class Worker:
 
         insert = ""
         for rec in Record.select():
-            self.BOT.send_message(497551952, f"~~~~~~~~\ntotal = {total}\nrec = {rec}\nrec.total_counts = {rec.total_counts}\n~~~~~~~~~~~")
+            self.mess = f"~~~~~~~~\ntotal = {total}\nrec = {rec}\nrec.total_counts = {rec.total_counts}\n~~~~~~~~~~~"
             if total > rec.total_counts:
                 insert = "Мы поставили новый рекорд!🎉"
                 a = Record.create(total_counts=total)
