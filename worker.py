@@ -112,7 +112,7 @@ class Worker:
                 else:
                     stat += f"     {name} - {one.count_messages}\n"
             except Exception:
-                stat += f"\<outgoing\> - {one.count_messages}\n"
+                stat += f"~outgoing - {one.count_messages}\n"
                 iter += 1
         total = 0
         for i in Person.select():
