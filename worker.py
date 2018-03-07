@@ -26,6 +26,9 @@ class Record(Model):
 Person.create_table()
 Record.create_table()
 
+rc = Record.create(total_counts=170)
+rc.save()
+
 class Worker:
     mess = ""
     BOT = None
