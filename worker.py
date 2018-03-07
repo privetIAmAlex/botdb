@@ -112,14 +112,15 @@ class Worker:
                 else:
                     stat += f"     {name} - {one.count_messages}\n"
             except Exception:
-                pass
+                stat += f"<Пользователь выбыл из чата> - {one.count_messages}\n"
+                iter += 1
         total = 0
         for i in Person.select():
             total += i.count_messages
 
         insert = ""
         for rec in Record.select():
-            self.mess = f"~~~~~~~~\ntotal = {total}\nrec = {rec}\nrec.total_counts = {rec.total_counts}\n~~~~~~~~~~~"
+            self.mess = f"~~~~~~~~\ntotal = {total}\nrec.total_counts = {rec.total_counts}\n~~~~~~~~~~~"
             if total > rec.total_counts:
                 insert = "Мы поставили новый рекорд!🎉"
                 a = Record.create(total_counts=total)
