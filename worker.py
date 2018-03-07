@@ -120,7 +120,7 @@ class Worker:
 
         insert = ""
         for rec in Record.select():
-            self.mess = f"~~~~~~~~\ntotal = {total}\nrec.total_counts = {rec.total_counts}\n~~~~~~~~~~~"
+            self.mess = f"~~~~~~~~\ntotal = {str(total)}\nrec.total_counts = {str(rec.total_counts)}\n~~~~~~~~~~~"
             if total > rec.total_counts:
                 insert = "Мы поставили новый рекорд!🎉"
                 a = Record.create(total_counts=total)
