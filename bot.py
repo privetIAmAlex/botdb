@@ -35,6 +35,8 @@ def handle_message(message):
             bot.send_message(497551952, str(worker.mess))            
         elif message.text == "unmute":
             bot.restrict_chat_member(-1001137097313, 497551952, until_date=time.time()+35)
+        elif message.text == "send_time":
+            bot.send_message(497551952, str(time.strftime("%H:%M")))
         return
     worker.Counter(message.from_user.id)
     if worker.FindBadWord(message.text):
