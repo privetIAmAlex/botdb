@@ -11,15 +11,6 @@ BAN_MESSAGE_ID = []
 def other_type_handler(message):
 	worker.Counter(message.from_user.id)
 
-@bot.message_handler(content_types=["photo"])
-def handle_photo(message):
-    worker.Counter(message.from_user.id)
-    if message.caption != None and worker.FindBadWord(message.caption):
-        try:
-            worker.BlockUser(message)
-        except:
-            bot.send_message(message.chat.id, "Так-с, материмся?👮‍♀️", reply_to_message_id=message.message_id)
-
 @bot.message_handler(content_types=["new_chat_members"])
 def new_members_handler(message):
     worker.HelloUser(message)
@@ -34,16 +25,25 @@ def CheckEdit(message):
                     bot.restrict_chat_member(message.chat.id, message.from_user.id, until_date=now+3600)
                     bot.send_message(message.chat.id, f"{message.from_user.first_name} заблокирован(а) на 1 час👮‍♀️")
                 except:
-                    bot.send_message(message.chat.id, "😑😑😑", reply_to_message_id=message.message_id)
+                    pass
             BAN_MESSAGE_ID.remove(message.message_id)
-    except:
+    except :
         pass
 
 def BlockUser(message):
-    t = threading.Timer(15.0, CheckEdit, [message])
+    t = threading.Timer(30.0, CheckEdit, [message])
     t.start()
-    bot.send_message(message.chat.id, "У тебя есть 15 секунд, чтобы удалить или исправить сообщение", reply_to_message_id=message.message_id)
+    bot.send_message(message.chat.id, "У тебя есть 30 секунд, чтобы удалить или исправить сообщение👮‍♀️", reply_to_message_id=message.message_id)
     BAN_MESSAGE_ID.append(message.message_id)  
+
+@bot.message_handler(content_types=["photo"])
+def handle_photo(message):
+    worker.Counter(message.from_user.id)
+    if message.caption != None and worker.FindBadWord(message.caption):
+        try:
+            BlockUser(message)
+        except:
+            bot.send_message(message.chat.id, "😑😑😑", reply_to_message_id=message.message_id)
 
 @bot.message_handler(content_types=["text"])
 def handle_message(message):
