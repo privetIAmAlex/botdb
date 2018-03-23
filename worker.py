@@ -2,6 +2,7 @@ import random
 from peewee import *
 import psycopg2
 import time
+import threading
 
 db = PostgresqlDatabase(
 	database="d8f1mjaq4lsqmk",
@@ -64,23 +65,7 @@ class Worker:
         for word in self.bad_words:
             if word in text:
                 return True
-        return False
-
-    def BlockUser(self, user_id, message_id, chat_id, first_name):
-        a = Person.get(Person.user_id == user_id)
-        a.ban_id = a.ban_id + 1
-        a.save()
-        now = time.time()
-        if a.ban_id >= 3:
-            self.BOT.restrict_chat_member(chat_id, user_id, until_date=now+3600)
-            self.BOT.send_message(chat_id, "<b>{} заблокирован(а) на 1 час</b>\n\n{}, у нас нельзя материться!\nВ следующий раз наказание будет строже!".format(first_name, first_name), parse_mode="html")
-        elif a.ban_id == 2:
-            self.BOT.restrict_chat_member(chat_id, user_id, until_date=now+300)
-            self.BOT.send_message(chat_id, "<b>{} заблокирован(а) на 5 минут</b>\n\n{}, у нас нельзя материться!\nВ следующий раз наказание будет строже!".format(first_name, first_name), parse_mode="html")
-        else:
-            self.BOT.restrict_chat_member(chat_id, user_id, until_date=now+60)
-            self.BOT.send_message(chat_id, "<b>{} заблокирован(а) на 1 минуту</b>\n\n{}, у нас нельзя материться!\nВ следующий раз наказание будет строже!".format(first_name, first_name), parse_mode="html")
-        self.BOT.delete_message(chat_id, message_id)
+        return False        
 
     def CurrentWord(self, number):                  
         iy = ['11', '12', '13', '14', '5', '6', '7', '8', '9', '0']

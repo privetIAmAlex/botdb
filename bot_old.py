@@ -1,11 +1,9 @@
 import telebot
 from worker import Worker
 import time
-import threading
 
 bot = telebot.TeleBot("492864827:AAFc_KDXUf4-06pZqstFv6HaPO5m5LaruvE")
 worker = Worker(bot)
-BAN_MESSAGE_ID = []
 
 @bot.message_handler(content_types=["audio", "document", "sticker", "video", "contact"])
 def other_type_handler(message):
@@ -16,34 +14,13 @@ def handle_photo(message):
     worker.Counter(message.from_user.id)
     if message.caption != None and worker.FindBadWord(message.caption):
         try:
-            worker.BlockUser(message)
+            worker.BlockUser(message.from_user.id, message.message_id, message.chat.id, message.from_user.first_name)
         except:
             bot.send_message(message.chat.id, "Так-с, материмся?👮‍♀️", reply_to_message_id=message.message_id)
 
 @bot.message_handler(content_types=["new_chat_members"])
 def new_members_handler(message):
     worker.HelloUser(message)
-
-@bot.edited_message_handler(func=lambda message: True)
-def CheckEdit(message):
-    try:
-        if message.message_id in BAN_MESSAGE_ID:
-            now = time.time()
-            if worker.FindBadWord(message.text):
-                try:
-                    bot.restrict_chat_member(message.chat.id, message.from_user.id, until_date=now+3600)
-                    bot.send_message(message.chat.id, f"{message.from_user.first_name} заблокирован(а) на 1 час👮‍♀️")
-                except:
-                    bot.send_message(message.chat.id, "😑😑😑", reply_to_message_id=message.message_id)
-            BAN_MESSAGE_ID.remove(message.message_id)
-    except:
-        pass
-
-def BlockUser(message):
-    t = threading.Timer(15.0, CheckEdit, [message])
-    t.start()
-    bot.send_message(message.chat.id, "У тебя есть 15 секунд, чтобы удалить или исправить сообщение", reply_to_message_id=message.message_id)
-    BAN_MESSAGE_ID.append(message.message_id)  
 
 @bot.message_handler(content_types=["text"])
 def handle_message(message):
@@ -63,6 +40,9 @@ def handle_message(message):
         return
     worker.Counter(message.from_user.id)
     if worker.FindBadWord(message.text):
-        BlockUser(message)
-
+        try:
+            worker.BlockUser(message.from_user.id, message.message_id, message.chat.id, message.from_user.first_name)
+        except:
+            bot.send_message(message.chat.id, "Так-с, материмся?👮‍♀️", reply_to_message_id=message.message_id)
+    
 bot.polling(none_stop=True)
