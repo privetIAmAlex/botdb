@@ -41,7 +41,7 @@ def handle_message(message):
     worker.Counter(message.from_user.id)
     if worker.FindBadWord(message.text):
         try:
-            worker.BlockUser(message.from_user.id, message.message_id, message.chat.id, message.from_user.first_name)
+            worker.ReplaceBadWord(message)
         except:
             bot.send_message(message.chat.id, "Так-с, материмся?👮‍♀️", reply_to_message_id=message.message_id)
     

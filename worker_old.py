@@ -60,18 +60,6 @@ class Worker:
         except DoesNotExist:
             Person.create(user_id=user_id, count_messages = 1, ban_id=0)
 
-    def GetAsterics(self, x):
-        return "*" * x
-
-    def ReplaceBadWord(self, message):
-        text = message.text
-        for word in self.bad_words:
-            if word in text:
-                text = text.replace(word, self.GetAsterics(len(word.strip())))
-        print(f"{message.from_user.first_name}: {text}")
-        self.BOT.send_messsage(message.chat.id, f"<b>{message.from_user.first_name}</b>: {text}", parse_mode="HTML")
-        self.BOT.delete_message(message.chat.id, message.message_id)
-
     def FindBadWord(self, text):
         text = text.lower()
         for word in self.bad_words:
@@ -148,5 +136,3 @@ class Worker:
                 per.save()
         letter = "Вот и подошла к концу ещё одна неделя! И вот вам немного статистики:\n\n<i>Самые активные участники:</i>\n{}\nА всего было напечатано <b>{}</b> {}!\n{}\n\nУдачи в наступающей неделе!😉".format(stat, total, self.CurrentWord(str(total)), insert)
         return letter
-
-        ##
