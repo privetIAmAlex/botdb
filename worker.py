@@ -68,8 +68,7 @@ class Worker:
         for word in self.bad_words:
             if word in text:
                 text = text.replace(word, self.GetAsterics(len(word.strip())))
-        print(f"{message.from_user.first_name}: {text}")
-        self.BOT.send_messsage(message.chat.id, f"<b>{message.from_user.first_name}</b>: {text}", parse_mode="HTML")
+        self.BOT.send_message(message.chat.id, f"<b>{message.from_user.first_name}</b>: {text}", parse_mode="HTML")
         self.BOT.delete_message(message.chat.id, message.message_id)
 
     def FindBadWord(self, text):

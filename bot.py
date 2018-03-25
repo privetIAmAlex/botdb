@@ -42,7 +42,8 @@ def handle_message(message):
     if worker.FindBadWord(message.text):
         try:
             worker.ReplaceBadWord(message)
-        except:
-            bot.send_message(message.chat.id, "Так-с, материмся?👮‍♀️", reply_to_message_id=message.message_id)
+        except Exception as ex:
+            #bot.send_message(message.chat.id, "Так-с, материмся?👮‍♀️", reply_to_message_id=message.message_id)
+            print(str(ex))
     
 bot.polling(none_stop=True)
