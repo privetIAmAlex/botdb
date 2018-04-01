@@ -27,7 +27,7 @@ class Record(Model):
 Person.create_table()
 Record.create_table()
 
-rc = Record.create(total_counts=1210)
+rc = Record.create(total_counts=1605)
 rc.save()
 
 class Worker:
