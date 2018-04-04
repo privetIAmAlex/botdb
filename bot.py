@@ -20,7 +20,8 @@ def handle_photo(message):
 
 @bot.message_handler(content_types=["new_chat_members"])
 def new_members_handler(message):
-    worker.HelloUser(message)
+	if message.from_user.id != 497551952:
+    	worker.HelloUser(message)
 
 @bot.message_handler(content_types=["text"])
 def handle_message(message):
