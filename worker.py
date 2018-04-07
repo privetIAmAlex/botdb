@@ -58,7 +58,7 @@ class Worker():
                 text = text.replace(word, new_word)
                 flag=True
         if flag:
-            self._bot.send_message(chat_id, f"<b>{first_name}:</b> {text}")
+            self._bot.send_message(chat_id, f"<b>{first_name}:</b> {text}", parse_mode="HTML")
 
     def CurrentWord(self, number):                  
         iy = ['11', '12', '13', '14', '5', '6', '7', '8', '9', '0']
