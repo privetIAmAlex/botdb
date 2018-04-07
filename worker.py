@@ -51,11 +51,14 @@ class Worker():
 
     def FindBadWord(self, chat_id, first_name, text):
         text_array = findall(r"[\w']+", text.lower())
+        flag = False
         for word in text_array:
             if word in bad_words:
                 new_word = word.replace(word[:-2], self.GetAsterics(len(word)))
                 text = text.replace(word, new_word)
-        self._bot.send_message(chat_id, f"<b>{first_name}:</b> {text}")
+                flag=True
+        if flag:
+            self._bot.send_message(chat_id, f"<b>{first_name}:</b> {text}")
 
     def CurrentWord(self, number):                  
         iy = ['11', '12', '13', '14', '5', '6', '7', '8', '9', '0']
