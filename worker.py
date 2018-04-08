@@ -18,7 +18,7 @@ db = PostgresqlDatabase(
 )
 
 class Person(Model):
-    id = IntegerField()
+    user_id = IntegerField()
     count_messages = IntegerField()
     class Meta:
         database = db
@@ -38,13 +38,13 @@ class Worker():
     def HelloUser(self, chat_id, user_name):
         self._bot.send_message(chat_id, choice(phrases).format(user_name))
 
-    def Counter(self, user_id):
+    def Counter(self, _user_id):
         try:
-            p = Person.get(id=user_id)
+            p = Person.get(user_id=_user_id)
             p.count_messages += 1
             p.save()
         except DoesNotExist:
-            Person.create(id=user_id, count_messages=1).save()
+            Person.create(user_id=_user_id, count_messages=1).save()
 
     def GetAsterics(self, x):
         return "*" * (x - 2)
@@ -78,7 +78,7 @@ class Worker():
         excepts = ""
         for one in Person.select().order_by(Person.count_messages.desc()).limit(10):
             try:
-                _user = self._bot.get_chat_member(-1001137097313, one.id)
+                _user = self._bot.get_chat_member(-1001137097313, one.user_id)
                 name = "@" + _user.user.username if _user.user.username != None else _user.user.first_name
                 if iter == 0: 
                     stat += f"🥇{name} - {one.count_messages}\n"
@@ -91,10 +91,10 @@ class Worker():
                     iter += 1
                 else:
                     stat += f"     {name} - {one.count_messages}\n"
-            except Exception as ex:
+            except Exception:
                 stat += f"~outgoing - {one.count_messages}\n"
                 iter += 1
-                excepts += str(one.id) + "\n"
+                excepts += str(one.user_id) + "\n"
         self._bot.send_message(497551952, excepts)
         total = 0
         for i in Person.select():
