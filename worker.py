@@ -75,7 +75,6 @@ class Worker():
     def AdminPanel(self, command):
         stat = ""
         iter = 0
-        excepts = ""
         for one in Person.select().order_by(Person.count_messages.desc()).limit(10):
             try:
                 _user = self._bot.get_chat_member(-1001137097313, one.user_id)
@@ -94,8 +93,6 @@ class Worker():
             except Exception:
                 stat += f"~outgoing - {one.count_messages}\n"
                 iter += 1
-                excepts += str(one.user_id) + "\n"
-        self._bot.send_message(497551952, excepts)
         total = 0
         for i in Person.select():
             total += i.count_messages
