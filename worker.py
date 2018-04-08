@@ -49,7 +49,7 @@ class Worker():
     def GetAsterics(self, x):
         return "*" * (x - 2)
 
-    def FindBadWord(self, chat_id, first_name, text):
+    def FindBadWord(self, chat_id, message_id, first_name, text):
         text_array = findall(r"[\w']+", text.lower())
         flag = False
         for word in text_array:
@@ -58,6 +58,7 @@ class Worker():
                 text = text.replace(word, new_word)
                 flag=True
         if flag:
+            self._bot.delete_message(chat_id, message_id)
             self._bot.send_message(chat_id, f"<b>{first_name}:</b> {text}", parse_mode="HTML")
 
     def CurrentWord(self, number):                  
@@ -72,11 +73,10 @@ class Worker():
                     return "сообщений"
 
     def AdminPanel(self, command):
-        print("Зашёл в метод")
         stat = ""
         iter = 0
+        excepts = ""
         for one in Person.select().order_by(Person.count_messages.desc()).limit(10):
-            print("В цикле")
             try:
                 _user = self._bot.get_chat_member(-1001137097313, one.id)
                 name = "@" + _user.user.username if _user.user.username != None else _user.user.first_name
@@ -91,17 +91,17 @@ class Worker():
                     iter += 1
                 else:
                     stat += f"     {name} - {one.count_messages}\n"
-            except Exception:
+            except Exception as ex:
                 stat += f"~outgoing - {one.count_messages}\n"
                 iter += 1
-        print("Вышел из цикла")
+                excepts += str(ex) + "\n"
+        self._bot.send_message(497551952, excepts)
         total = 0
         for i in Person.select():
             total += i.count_messages
         letter = "Вот и подошла к концу ещё одна неделя! И вот вам немного статистики:\n\n<i>Самые активные участники:</i>\n{}\nА всего было напечатано <b>{}</b> {}!\n\nУдачи в наступающей неделе!😉".format(stat, total, self.CurrentWord(str(total)))
         
         if command == "send_stat_me":
-            print("Принял команду")
             self._bot.send_message(497551952, letter, parse_mode="HTML")
         elif command == "send_stat":
             if time.strftime("%w") == 0:
