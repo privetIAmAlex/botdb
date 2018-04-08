@@ -17,6 +17,7 @@ def handle_message(message):
     if message.chat.id == 497551952:
         _worker.AdminPanel(message.text)
         return
+    _worker.Counter(message.from_user.id)
     _worker.FindBadWord(message.chat.id, message.message_id, message.from_user.first_name, message.text)
 
 bot.polling(none_stop=True)
