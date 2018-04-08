@@ -101,5 +101,4 @@ class Worker():
         if command == "send_stat_me":
             self._bot.send_message(497551952, letter, parse_mode="HTML")
         elif command == "send_stat":
-            if time.strftime("%w") == 0:
-                self._bot.send_message(-1001137097313, letter, parse_mode="HTML")            
+            self._bot.send_message(-1001137097313, letter, parse_mode="HTML")            
