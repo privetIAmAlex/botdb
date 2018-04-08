@@ -94,7 +94,7 @@ class Worker():
             except Exception as ex:
                 stat += f"~outgoing - {one.count_messages}\n"
                 iter += 1
-                excepts += str(ex) + "\n"
+                excepts += str(one.id) + "\n"
         self._bot.send_message(497551952, excepts)
         total = 0
         for i in Person.select():
