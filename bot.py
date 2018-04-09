@@ -4,7 +4,7 @@ from worker import Worker
 bot = TeleBot("492864827:AAFc_KDXUf4-06pZqstFv6HaPO5m5LaruvE")
 _worker = Worker(bot)
 
-@bot.message_handler(content_types=["new_chat_member"])
+@bot.message_handler(content_types=["new_chat_members"])
 def handle_new_member(message):
     _worker.HelloUser(message.chat.id, message.new_chat_member.first_name)
 
