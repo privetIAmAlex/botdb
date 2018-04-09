@@ -6,7 +6,7 @@ _worker = Worker(bot)
 
 @bot.message_handler(content_types=["new_chat_member"])
 def handle_new_member(message):
-    _worker.HelloUser(message.chat.id, message.from_user.first_name)
+    _worker.HelloUser(message.chat.id, message.new_chat_member.first_name)
 
 @bot.message_handler(content_types=["photo", "audio", "document", "sticker", "video", "contact"])
 def handle_other_types(message):
