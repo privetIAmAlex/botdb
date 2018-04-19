@@ -49,11 +49,11 @@ class Worker():
                 if iy[i] in number:
                     return "сообщений"
 
-    def GetMyStat(self, _message_id, _user_id, _user_first_name):
+    def GetMyStat(self, _chat_id, _message_id, _user_id, _user_first_name):
         letter = ""
         try:
             p = Person.get(user_id=_user_id)
             letter = "{}! Ты написал(а) {} {}👍".format(_user_first_name, p.count_messages, self.CurrentWord(str(p.count_messages)))
         except DoesNotExist:
             letter = "Ты пока ещё не написал(а) ни одного сообщения😑"
-        self._bot.send_message(_message_id, letter)
+        self._bot.send_message(_chat_id, letter)

@@ -11,7 +11,7 @@ def handle_new_member(message):
 
 @bot.message_handler(commands=["me"])
 def my_stat(message):
-    _worker.GetMyStat(message.message_id, message.from_user.id, message.from_user.first_name)
+    _worker.GetMyStat(message.chat.id, message.message_id, message.from_user.id, message.from_user.first_name)
 
 @bot.message_handler(content_types=["photo", "audio", "document", "sticker", "video", "contact"])
 def handle_other_types(message):
