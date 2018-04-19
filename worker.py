@@ -53,7 +53,10 @@ class Worker():
         letter = ""
         try:
             p = Person.get(user_id=_user_id)
-            letter = "{}! Ты написал(а) {} {}👍".format(_user_first_name, p.count_messages, self.CurrentWord(str(p.count_messages)))
+            letter = "{}! Ты написал(а) <b>{}</b> {}👍".format(_user_first_name, p.count_messages, self.CurrentWord(str(p.count_messages)))
         except DoesNotExist:
             letter = "Ты пока ещё не написал(а) ни одного сообщения😑"
-        self._bot.send_message(_chat_id, letter, reply_to_message_id=_message_id)
+        try:
+            self._bot.delete_message(_chat_id, _message_id)
+        except:pass
+        self._bot.send_message(_chat_id, letter, parse_mode="HTML")
