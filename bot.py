@@ -6,7 +6,8 @@ _worker = Worker(bot)
 
 @bot.message_handler(content_types=["new_chat_members"])
 def handle_new_member(message):
-    _worker.HelloUser(message.chat.id, message.new_chat_member.first_name)
+    if message.from_user.id != 497551952:
+        _worker.HelloUser(message.chat.id, message.new_chat_member.first_name)
 
 @bot.message_handler(commands=["me"])
 def my_stat(message):
