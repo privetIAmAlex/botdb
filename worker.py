@@ -53,7 +53,7 @@ class Worker():
         letter = ""
         try:
             p = Person.get(user_id=_user_id)
-            letter = "{}! Ты написал(а) <b>{}</b> {}👍".format(_user_first_name, p.count_messages, self.CurrentWord(str(p.count_messages)))
+            letter = "{} написал(а) <b>{}</b> {}👍".format(_user_first_name, p.count_messages, self.CurrentWord(str(p.count_messages)))
         except DoesNotExist:
             letter = "Ты пока ещё не написал(а) ни одного сообщения😑"
         try:
