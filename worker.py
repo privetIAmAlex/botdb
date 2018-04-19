@@ -56,4 +56,4 @@ class Worker():
             letter = "{}! Ты написал(а) {} {}👍".format(_user_first_name, p.count_messages, self.CurrentWord(str(p.count_messages)))
         except DoesNotExist:
             letter = "Ты пока ещё не написал(а) ни одного сообщения😑"
-        self._bot.send_message(_chat_id, letter)
+        self._bot.send_message(_chat_id, letter, reply_to_message_id=_message_id)
