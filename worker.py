@@ -56,7 +56,32 @@ class Worker():
             letter = "{} написал(а) <b>{}</b> {}👍".format(_user_first_name, p.count_messages, self.CurrentWord(str(p.count_messages)))
         except DoesNotExist:
             letter = "Ты пока ещё не написал(а) ни одного сообщения😑"
-        try:
-            self._bot.delete_message(_chat_id, _message_id)
-        except:pass
+        # try:
+        #     self._bot.delete_message(_chat_id, _message_id)
+        # except:pass
         self._bot.send_message(_chat_id, letter, parse_mode="HTML")
+
+    def GetTop(self, chat_id):
+        stat = 0
+        iter = 0
+        for one in Person.select().order_by(Person.count_messages.desc()).limit(10):
+            try:
+                _user = self._bot.get_chat_member(-1001137097313, one.user_id) #chat_id
+                name = "@" + _user.user.username if _user.user.username != None else _user.user.first_name
+                if iter == 0: 
+                    stat += f"🥇{name} - {one.count_messages}\n"
+                    iter += 1
+                elif iter == 1:
+                    stat += f"🥈{name} - {one.count_messages}\n"
+                    iter += 1
+                elif iter == 2:
+                    stat += f"🥉{name} - {one.count_messages}\n"
+                    iter += 1
+                else:
+                    stat += f"     {name} - {one.count_messages}\n"
+            except Exception:
+                stat += f"~~~ - {one.count_messages}\n"
+                iter += 1
+
+        letter = "Топ-10 участников группы:\n\n{}".format(stat)
+        self._bot.send_message(chat_id, letter)

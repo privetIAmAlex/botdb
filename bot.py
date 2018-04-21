@@ -8,10 +8,16 @@ _worker = Worker(bot)
 def handle_new_member(message):
     if message.from_user.id != 497551952:
         _worker.HelloUser(message.chat.id, message.new_chat_member.first_name)
+    else:
+        bot.delete_message(message.chat.id, message.message_id)
 
 @bot.message_handler(commands=["me"])
 def my_stat(message):
     _worker.GetMyStat(message.chat.id, message.message_id, message.from_user.id, message.from_user.first_name)
+
+@bot.message_handler(commands=["top"])
+def get_top(message):
+    _worker.GetTop(message.chat.id)
 
 @bot.message_handler(content_types=["photo", "audio", "document", "sticker", "video", "contact"])
 def handle_other_types(message):
