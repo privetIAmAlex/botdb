@@ -80,6 +80,7 @@ class Worker():
                     iter += 1
                 else:
                     stat += f"     {name} - {one.count_messages}\n"
+                    iter += 1
             except Exception:
                 #stat += f"~~~ - {one.count_messages}\n"
                 #iter += 1
