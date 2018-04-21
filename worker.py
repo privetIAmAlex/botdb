@@ -62,7 +62,7 @@ class Worker():
         self._bot.send_message(_chat_id, letter, parse_mode="HTML")
 
     def GetTop(self, chat_id):
-        stat = 0
+        stat = ""
         iter = 0
         for one in Person.select().order_by(Person.count_messages.desc()).limit(10):
             try:
