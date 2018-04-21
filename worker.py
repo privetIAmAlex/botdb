@@ -65,7 +65,7 @@ class Worker():
         stat = ""
         iter = 0
         for one in Person.select().order_by(Person.count_messages.desc()):
-            if iter > 10 : break
+            if iter > 9 : break
             try:
                 _user = self._bot.get_chat_member(-1001137097313, one.user_id) #chat_id
                 name = "@" + _user.user.username if _user.user.username != None else _user.user.first_name
