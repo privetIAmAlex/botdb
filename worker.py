@@ -80,7 +80,7 @@ class Worker():
                 else:
                     stat += f"     {name} - {one.count_messages}\n"
             except Exception:
-                stat += f"~~~ - {one.count_messages}\n"
+                #stat += f"~~~ - {one.count_messages}\n"
                 iter += 1
 
         letter = "Топ-10 участников группы:\n\n{}".format(stat)
