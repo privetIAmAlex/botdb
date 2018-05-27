@@ -22,7 +22,7 @@ def get_top(message):
 ##################################################
 @bot.message_handler(commands=["oops"])
 def check_sure(message):
-    msg = bot.send_message(message.chat.id, "Ты верен(а), что хочешь это сделать? (Да/Нет)")
+    msg = bot.send_message(message.chat.id, "Ты уверен(а), что хочешь это сделать? (Да/Нет)")
     bot.register_next_step_handler(msg, destroy)
 
 
