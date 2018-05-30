@@ -1,7 +1,7 @@
 from telebot import TeleBot
 from worker import Worker
 
-bot = TeleBot("492864827:AAEESNYDf2yaK5bZrFBqbZBnFYatvykT0xY")
+bot = TeleBot("492864827:AAGEoxfQRN8S7hHmCT6VELwmquIRIWyNpxk")
 _worker = Worker(bot)
 
 @bot.message_handler(content_types=["new_chat_members"])
