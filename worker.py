@@ -9,10 +9,10 @@ phrases = [
     ]
 
 db = PostgresqlDatabase(
-	database="d8f1mjaq4lsqmk",
-    user="torfxnhntooste",
-    password="6173a4aac270a1b86399b085f79ed30718af3c63a585597675e62d4366c0ce8d",
-    host="ec2-54-163-234-99.compute-1.amazonaws.com",
+	database="",
+    user="",
+    password="",
+    host="",
     port=5432
 )
 
